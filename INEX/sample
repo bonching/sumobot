@@ -1,0 +1,106 @@
+#include <Arduino.h>
+#include <New Ping.h>
+
+// Define constants
+const int MAX_SPEED = 255;
+const int MIN_SPEED = 0;
+const int TURN_SPEED = 100;
+const int SENSITIVITY = 50;
+const int EDGE_THRESHOLD = 400;
+const int CORNER_THRESHOLD = 200;
+
+// Define pin connections
+const int LEFT_MOTOR_FORWARD = 2;
+const int LEFT_MOTOR_BACKWARD = 3;
+const int RIGHT_MOTOR_FORWARD = 4;
+const int RIGHT_MOTOR_BACKWARD = 5;
+const int LEFT_SENSOR = A0;
+const int RIGHT_SENSOR = A1;
+const int FRONT_SENSOR = A2;
+
+// Define variables
+int leftMotorSpeed = 0;
+int rightMotorSpeed = 0;
+int leftSensorValue = 0;
+int rightSensorValue = 0;
+int frontSensorValue = 0;
+
+void setup() {
+    // Initialize motor pins as outputs
+    pinMode(LEFT_MOTOR_FORWARD, OUTPUT);
+    pinMode(LEFT_MOTOR_BACKWARD, OUTPUT);
+    pinMode(RIGHT_MOTOR_FORWARD, OUTPUT);
+    pinMode(RIGHT_MOTOR_BACKWARD, OUTPUT);
+
+    // Initialize sensor pins as inputs
+    pinMode(LEFT_SENSOR, INPUT);
+    pinMode(RIGHT_SENSOR, INPUT);
+    pinMode(FRONT_SENSOR, INPUT);
+}
+
+void loop() {
+    // Read sensor values
+    leftSensorValue = analogRead(LEFT_SENSOR);
+    rightSensorValue = analogRead(RIGHT_SENSOR);
+    frontSensorValue = analogRead(FRONT_SENSOR);
+
+    // Edge detection
+    if (leftSensorValue < EDGE_THRESHOLD || rightSensorValue < EDGE_THRESHOLD) {
+        // Turn away from edge
+        turnAwayFromEdge();
+    } else {
+        // Move forward
+        moveForward();
+    }
+
+    // Corner detection
+    if (frontSensorValue < CORNER_THRESHOLD) {
+        // Turn around corner
+        turnAroundCorner();
+    }
+
+    // Collision avoidance
+    if (leftSensorValue < SENSITIVITY || rightSensorValue < SENSITIVITY) {
+        // Stop and turn around
+        stopAndTurnAround();
+    }
+
+    // Update motor speeds
+    updateMotorSpeeds();
+}
+
+void turnAwayFromEdge() {
+    // Turn away from edge
+    leftMotorSpeed = -TURN_SPEED;
+    rightMotorSpeed = TURN_SPEED;
+}
+
+void moveForward() {
+    // Move forward
+    leftMotorSpeed = MAX_SPEED;
+    rightMotorSpeed = MAX_SPEED;
+}
+
+void turnAroundCorner() {
+    // Turn around corner
+    leftMotorSpeed = -TURN_SPEED;
+    rightMotorSpeed = TURN_SPEED;
+}
+
+void stopAndTurnAround() {
+    // Stop and turn around
+    leftMotorSpeed = 0;
+    rightMotorSpeed = 0;
+    delay(100);
+    leftMotorSpeed = -TURN_SPEED;
+    rightMotorSpeed = TURN_SPEED;
+}
+
+void updateMotorSpeeds() {
+    // Update motor speeds
+    analogWrite(LEFT_MOTOR_FORWARD, leftMotorSpeed);
+    analogWrite(LEFT_MOTOR_BACKWARD, -leftMotorSpeed);
+    analogWrite(RIGHT_MOTOR_FORWARD, rightMotorSpeed);
+    analogWrite(RIGHT_MOTOR_BACKWARD, -rightMotorSpeed);
+}
+
