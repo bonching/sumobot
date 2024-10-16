@@ -6,8 +6,12 @@ int EDGE_RIGHT_THRESHOLD = 900;
 int FRONT_THRESHOLD = 250;
 
 int ATTACK_SPEED = 100;
+
 int BACKOFF_SPEED = 80;
 int BACKOFF_SPIN_SPEED = 60;
+int BACKOFF_DELAY = 500;
+int BACKOFF_SPIN_DELAY = 1000;
+
 int SEARCH_SPIN_SPEED = 50;
 
 int LEFT = 0;
@@ -15,6 +19,7 @@ int RIGHT = 1;
 
 
 int direction = LEFT;
+string action = ""; // SEARCH/ATTACK/BACKOFF
 unsigned int data = 0; // stores the controller response
 
 
@@ -44,10 +49,12 @@ void loop() {
 }
 
 void attack() {
+    action = "ATTACK";
     FD(ATTACK_SPEED);
 }
 
 void search(int direction) {
+    action = "SEARCH";
     if (direction == LEFT) {
         SL(SEARCH_SPIN_SPEED);
     } else {
@@ -56,15 +63,16 @@ void search(int direction) {
 }
 
 void backoff(int direction) {
+    action = "BACKOFF";
     BK(BACKOFF_SPEED);
-    delay(300);
+    delay(BACKOFF_DELAY);
 
     if (direction == LEFT) {
         SL(BACKOFF_SPIN_SPEED);
     } else {
         SR(BACKOFF_SPIN_SPEED);
     }
-    delay(600);
+    delay(BACKOFF_SPIN_DELAY);
 
     AO();
     delay(50);
@@ -74,6 +82,8 @@ void printSensorReadings() {
     oled.text(0, 0, "%d ", analog(0)); // left line sensor
     oled.text(1, 0, "%d ", analog(1)); // right line sensor
     oled.text(2, 0, "%d ", analog(2)); // front object sensor
+    oled.text(3, 0, "%d ", action);
+    oled.text(4, 0, "%d ", direction);
     oled.display();
 }
 
