@@ -6,6 +6,8 @@ int EDGE_LEFT_THRESHOLD = 900;
 int EDGE_RIGHT_THRESHOLD = 900;
 int FRONT_THRESHOLD = 500;
 int RIGHT_THRESHOLD = 500; // For right object sensor
+int LEFT_THRESHOLD = 500; // For left object sensor
+int BACK_THRESHOLD = 500; // For back object sensor
 
 int ATTACK_SPEED = 100;
 
@@ -60,10 +62,18 @@ void loop() {
         direction = LEFT;
     } else if(analog(2) > FRONT_THRESHOLD){
         attack();
-    } else if(analog(3) > RIGHT_THRESHOLD){
-        // object detected on the right, backoff to the left and attack
-        backoff(LEFT);
-        direction = LEFT;
+    }  else if(analog(3) > BACK_THRESHOLD){
+        SR(100);
+        delay(1000);
+        attack();
+    } else if(analog(4) > RIGHT_THRESHOLD){
+        SR(30);
+        delay(1000);
+        attack();
+    }  else if(analog(6) > LEFT_THRESHOLD){
+        SL(30);
+        delay(1000);
+        attack();
     } else {
         searchForwardCounter++;
         search(direction);
@@ -118,10 +128,11 @@ void printSensorReadings() {
     oled.text(0, 0, "%d ", analog(0)); // left line sensor
     oled.text(1, 0, "%d ", analog(1)); // right line sensor
     oled.text(2, 0, "%d ", analog(2)); // front object sensor
-    oled.text(3, 0, "%d ", analog(3)); // right object sensor
-    oled.text(4, 0, action.c_str());
-    oled.text(5, 0, direction == 0 ? "LEFT " : "RIGHT");
-    oled.text(6, 0, "Right Sensor : %d", analog(3)); // print right sensor reading
+    oled.text(3, 0, "%d ", analog(3)); // back object sensor
+    oled.text(4, 0, "%d ", analog(4)); // right object sensor
+    oled.text(5, 0, "%d ", analog(6)); // left object sensor
+    oled.text(6, 0, action.c_str());
+    oled.text(7, 0, direction == 0 ? "LEFT " : "RIGHT");
     oled.display();
 }
 
