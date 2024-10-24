@@ -1,6 +1,5 @@
 #include "POP32.h"
 
-
 /* ============= Configurations ================= */
 int EDGE_LEFT_THRESHOLD = 900;
 int EDGE_RIGHT_THRESHOLD = 900;
@@ -63,15 +62,12 @@ void loop() {
     } else if(analog(2) > FRONT_THRESHOLD){
         attack();
     } else if(analog(4) > RIGHT_THRESHOLD){
-        SR(30);
-        delay(1000);
+        backoff(LEFT);
         attack();
     }  else if(analog(6) > LEFT_THRESHOLD){
-        SL(30);
-        delay(1000);
+        backoff(RIGHT);
         attack();
     }  else if(analog(3) > BACK_THRESHOLD){
-        attack();
         SR(100);
         delay(1000);
         attack();
