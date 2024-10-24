@@ -10,14 +10,17 @@ int BACK_THRESHOLD = 500; // For back object sensor
 
 int ATTACK_SPEED = 100;
 
-int BACKOFF_SPEED = 80;
-int BACKOFF_DELAY = 500;
-int BACKOFF_SPIN_SPEED = 60;
-int BACKOFF_SPIN_DELAY = 1000;
+int BACKOFF_SPEED = 100;
+int BACKOFF_DELAY = 400;
+int BACKOFF_SPIN_SPEED = 100;
+int BACKOFF_SPIN_DELAY = 500;
 
-int SEARCH_SPEED = 60;
-int SEARCH_TURN_SPEED = 50;
-int SEARCH_TURN_DELAY = 1000;
+int TURNAROUND_SPIN_SPEED = 100;
+int TURNAROUND_SPIN_DELAY = 1500;
+
+int SEARCH_SPEED = 100;
+int SEARCH_SPIN_SPEED = 100;
+int SEARCH_SPIN_DELAY = 600;
 int SEARCH_FORWARD_MAX_COUNT = 15; // search forward without turning left/right
 int TOGGLE_DIRECTION_COUNT = 3; // change search direction after n count
 /* ============= Configurations ================= */
@@ -62,15 +65,14 @@ void loop() {
     } else if(analog(2) > FRONT_THRESHOLD){
         attack();
     } else if(analog(4) > RIGHT_THRESHOLD){
-        backoff(LEFT);
-        attack();
+        SR(SEARCH_SPIN_SPEED);
+        delay(SEARCH_SPIN_DELAY);
     }  else if(analog(6) > LEFT_THRESHOLD){
-        backoff(RIGHT);
-        attack();
+        SL(SEARCH_SPIN_SPEED);
+        delay(SEARCH_SPIN_DELAY);
     }  else if(analog(3) > BACK_THRESHOLD){
-        SR(100);
-        delay(1000);
-        attack();
+        SR(TURNAROUND_SPIN_SPEED);
+        delay(TURNAROUND_SPIN_DELAY);
     } else {
         searchForwardCounter++;
         search(direction);
@@ -92,11 +94,11 @@ void search(int searchDirection) {
 
     action = ACTION_SEARCH;
     if (searchDirection == LEFT) {
-        TL(SEARCH_TURN_SPEED);
+        TL(SEARCH_SPIN_SPEED);
     } else {
-        TR(SEARCH_TURN_SPEED);
+        TR(SEARCH_SPIN_SPEED);
     }
-    delay(SEARCH_TURN_DELAY);
+    delay(SEARCH_SPIN_DELAY);
 
     switchDirectionCount++;
     if (switchDirectionCount == TOGGLE_DIRECTION_COUNT) {
