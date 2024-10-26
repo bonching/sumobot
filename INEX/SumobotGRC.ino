@@ -49,7 +49,7 @@ unsigned int data = 0; // stores the controller response
 
 void setup() {
     oled.textSize(1);
-    delay(1000);
+    delay(10);
 }
 
 
