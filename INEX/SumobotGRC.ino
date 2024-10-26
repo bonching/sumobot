@@ -53,7 +53,6 @@ void setup() {
 
 void loop() {
     // test();
-    printSensorReadings();
 
     if (analog(0) > EDGE_LEFT_THRESHOLD) {
         // edge is detected on the left, backoff and u-turn to the right
@@ -78,6 +77,8 @@ void loop() {
         searchForwardCounter++;
         search(direction);
     }
+
+    printSensorReadings();
 }
 
 void attack() {
