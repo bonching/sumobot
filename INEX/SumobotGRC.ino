@@ -8,6 +8,13 @@ int RIGHT_THRESHOLD = 500; // For right object sensor
 int LEFT_THRESHOLD = 500; // For left object sensor
 int BACK_THRESHOLD = 1000; // For back object sensor
 
+int PIN_BOTTOM_LEFT_SENSOR = 0;
+int PIN_BOTTOM_RIGHT_SENSOR = 1;
+int PIN_FRONT_SENSOR = 2;
+int PIN_FRONT_LEFT_SENSOR = 6;
+int PIN_FRONT_RIGHT_SENSOR = 4;
+int PIN_BACK_SENSOR = 3;
+
 int ATTACK_SPEED = 100;
 int ATTACK_DELAY = 100;
 
@@ -56,25 +63,23 @@ void setup() {
 void loop() {
     // test();
 
-    if (analog(0) > EDGE_LEFT_THRESHOLD) {
+    if (analog(PIN_BOTTOM_LEFT_SENSOR) > EDGE_LEFT_THRESHOLD) {
         // edge is detected on the left, backoff and u-turn to the right
         backoff(RIGHT);
         direction = RIGHT;
-    } else if (analog(1) > EDGE_RIGHT_THRESHOLD) {
+    } else if (analog(PIN_BOTTOM_RIGHT_SENSOR) > EDGE_RIGHT_THRESHOLD) {
         // edge is detected on the right, backoff and u-turn to the left
         backoff(LEFT);
         direction = LEFT;
-    } else if(analog(2) > FRONT_THRESHOLD) {
+    } else if(analog(PIN_FRONT_SENSOR) > FRONT_THRESHOLD
+               && analog(PIN_FRONT_SENSOR) > analog(PIN_FRONT_LEFT_SENSOR)
+               && analog(PIN_FRONT_SENSOR) > analog(PIN_FRONT_RIGHT_SENSOR)) {
         attack();
-    }  else if(analog(6) > LEFT_THRESHOLD) {
-        action = ACTION_SEARCH_LEFT;
-        SL(SEARCH_SPIN_SPEED);
-        delay(SEARCH_SPIN_DELAY);
-    } else if(analog(4) > RIGHT_THRESHOLD) {
-        action = ACTION_SEARCH_RIGHT;
-        SR(SEARCH_SPIN_SPEED);
-        delay(SEARCH_SPIN_DELAY);
-    }  else if(analog(3) > BACK_THRESHOLD) {
+    }  else if(analog(PIN_FRONT_LEFT_SENSOR) > LEFT_THRESHOLD) {
+        attack_left();
+    } else if(analog(PIN_FRONT_RIGHT_SENSOR) > RIGHT_THRESHOLD) {
+        attack_right();
+    }  else if(analog(PIN_BACK_SENSOR) > BACK_THRESHOLD) {
         SR(TURNAROUND_SPIN_SPEED);
         delay(TURNAROUND_SPIN_DELAY);
     } else {
@@ -89,6 +94,18 @@ void attack() {
     action = ACTION_ATTACK;
     FD(ATTACK_SPEED);
     delay(ATTACK_DELAY);
+}
+
+void attack_left() {
+    action = ACTION_SEARCH_LEFT;
+    SL(SEARCH_SPIN_SPEED);
+    delay(SEARCH_SPIN_DELAY);
+}
+
+void attack_right() {
+    action = ACTION_SEARCH_RIGHT;
+    SR(SEARCH_SPIN_SPEED);
+    delay(SEARCH_SPIN_DELAY);
 }
 
 void search(int searchDirection) {
