@@ -9,6 +9,7 @@ int LEFT_THRESHOLD = 500; // For left object sensor
 int BACK_THRESHOLD = 500; // For back object sensor
 
 int ATTACK_SPEED = 100;
+int ATTACK_DELAY = 300;
 
 int BACKOFF_SPEED = 100;
 int BACKOFF_DELAY = 400;
@@ -82,6 +83,7 @@ void loop() {
 void attack() {
     action = ACTION_ATTACK;
     FD(ATTACK_SPEED);
+    delay(ATTACK_DELAY);
 }
 
 void search(int searchDirection) {
