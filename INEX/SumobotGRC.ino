@@ -69,11 +69,11 @@ void loop() {
     }  else if(analog(6) > LEFT_THRESHOLD){
         action = ACTION_SEARCH_LEFT;
         SL(SEARCH_SPIN_SPEED);
-        delay(SEARCH_SPIN_DELAY);
+//        delay(SEARCH_SPIN_DELAY);
     } else if(analog(4) > RIGHT_THRESHOLD){
         action = ACTION_SEARCH_RIGHT;
         SR(SEARCH_SPIN_SPEED);
-        delay(SEARCH_SPIN_DELAY);
+//        delay(SEARCH_SPIN_DELAY);
 //    }  else if(analog(3) > BACK_THRESHOLD){
 //        SR(TURNAROUND_SPIN_SPEED);
 //        delay(TURNAROUND_SPIN_DELAY);
