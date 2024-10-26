@@ -67,11 +67,11 @@ void loop() {
     } else if(analog(2) > FRONT_THRESHOLD){
         attack();
     }  else if(analog(6) > LEFT_THRESHOLD){
-        action = ACTION_SEARCH_RIGHT;
+        action = ACTION_SEARCH_LEFT;
         SL(SEARCH_SPIN_SPEED);
         delay(SEARCH_SPIN_DELAY);
     } else if(analog(4) > RIGHT_THRESHOLD){
-        action = ACTION_SEARCH_LEFT;
+        action = ACTION_SEARCH_RIGHT;
         SR(SEARCH_SPIN_SPEED);
         delay(SEARCH_SPIN_DELAY);
 //    }  else if(analog(3) > BACK_THRESHOLD){
