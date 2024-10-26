@@ -20,7 +20,7 @@ int TURNAROUND_SPIN_DELAY = 1500;
 
 int SEARCH_SPEED = 100;
 int SEARCH_SPIN_SPEED = 100;
-int SEARCH_SPIN_DELAY = 200;
+int SEARCH_SPIN_DELAY = 100;
 int SEARCH_FORWARD_MAX_COUNT = 30; // search forward without turning left/right
 int TOGGLE_DIRECTION_COUNT = 1; // change search direction after n count
 /* ============= Configurations ================= */
