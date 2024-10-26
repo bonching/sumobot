@@ -21,7 +21,7 @@ int TURNAROUND_SPIN_DELAY = 1500;
 int SEARCH_SPEED = 100;
 int SEARCH_SPIN_SPEED = 100;
 int SEARCH_SPIN_DELAY = 200;
-int SEARCH_FORWARD_MAX_COUNT = 15; // search forward without turning left/right
+int SEARCH_FORWARD_MAX_COUNT = 30; // search forward without turning left/right
 int TOGGLE_DIRECTION_COUNT = 1; // change search direction after n count
 /* ============= Configurations ================= */
 
@@ -94,9 +94,9 @@ void search(int searchDirection) {
 
     action = ACTION_SEARCH;
     if (searchDirection == LEFT) {
-        TL(SEARCH_SPIN_SPEED);
+        SL(SEARCH_SPIN_SPEED);
     } else {
-        TR(SEARCH_SPIN_SPEED);
+        SR(SEARCH_SPIN_SPEED);
     }
     delay(SEARCH_SPIN_DELAY);
 
