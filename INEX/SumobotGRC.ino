@@ -4,8 +4,8 @@
 int EDGE_LEFT_THRESHOLD = 900;
 int EDGE_RIGHT_THRESHOLD = 900;
 int FRONT_THRESHOLD = 500;
-int RIGHT_THRESHOLD = 1000; // For right object sensor
-int LEFT_THRESHOLD = 1000; // For left object sensor
+int RIGHT_THRESHOLD = 500; // For right object sensor
+int LEFT_THRESHOLD = 500; // For left object sensor
 int BACK_THRESHOLD = 1000; // For back object sensor
 
 int ATTACK_SPEED = 100;
