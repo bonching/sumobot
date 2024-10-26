@@ -30,9 +30,11 @@ int TOGGLE_DIRECTION_COUNT = 1; // change search direction after n count
 /* ============= Constants ================= */
 int LEFT = 0;
 int RIGHT = 1;
-String ACTION_SEARCH = "SEARCH ";
-String ACTION_ATTACK = "ATTACK ";
-String ACTION_BACKOFF = "BACKOFF";
+String ACTION_SEARCH = "SEARCH      ";
+String ACTION_SEARCH_LEFT = "SEARCH LEFT ";
+String ACTION_SEARCH_RIGHT = "SEARCH RIGHT";
+String ACTION_ATTACK = "ATTACK      ";
+String ACTION_BACKOFF = "BACKOFF     ";
 /* ============= Constants ================= */
 
 
@@ -40,7 +42,7 @@ String ACTION_BACKOFF = "BACKOFF";
 int direction = LEFT;
 int switchDirectionCount = 0;
 int searchForwardCounter = 0;
-String action = ""; // SEARCH/ATTACK/BACKOFF
+String action = ""; // SEARCH/ATTACK/BACKOFF/SEARCH_LEFT/SEARCH_RIGHT
 unsigned int data = 0; // stores the controller response
 /* ============= Default Values ================= */
 
@@ -64,11 +66,13 @@ void loop() {
         direction = LEFT;
     } else if(analog(2) > FRONT_THRESHOLD){
         attack();
-    } else if(analog(4) > RIGHT_THRESHOLD){
-        SR(SEARCH_SPIN_SPEED);
-        delay(SEARCH_SPIN_DELAY);
     }  else if(analog(6) > LEFT_THRESHOLD){
+        action = ACTION_SEARCH_RIGHT;
         SL(SEARCH_SPIN_SPEED);
+        delay(SEARCH_SPIN_DELAY);
+    } else if(analog(4) > RIGHT_THRESHOLD){
+        action = ACTION_SEARCH_LEFT;
+        SR(SEARCH_SPIN_SPEED);
         delay(SEARCH_SPIN_DELAY);
 //    }  else if(analog(3) > BACK_THRESHOLD){
 //        SR(TURNAROUND_SPIN_SPEED);
