@@ -9,7 +9,7 @@ int LEFT_THRESHOLD = 500; // For left object sensor
 int BACK_THRESHOLD = 1000; // For back object sensor
 
 int ATTACK_SPEED = 100;
-int ATTACK_DELAY = 300;
+int ATTACK_DELAY = 100;
 
 int BACKOFF_SPEED = 100;
 int BACKOFF_DELAY = 400;
