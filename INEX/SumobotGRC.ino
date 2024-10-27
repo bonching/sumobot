@@ -1,5 +1,6 @@
 #include "POP32.h"
 
+
 /* ============= Configurations ================= */
 int EDGE_LEFT_THRESHOLD = 900;
 int EDGE_RIGHT_THRESHOLD = 900;
